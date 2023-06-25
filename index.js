@@ -13,15 +13,15 @@ program.parse(process.argv);
 
 const argv = program.opts();
 
-function invokeAction({ action, id, name, email, phone }) {
+async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      const AllContacts = await contacts.listContacts();
-      console.table(AllContacts);
+      const allContacts = await contacts.listContacts();
+      console.table(allContacts);
       break;
 
     case "get":
-     const contactById = await contacts.getContactById(id);
+      const contactById = await contacts.getContactById(id);
       console.log(contactById);
       break;
 
