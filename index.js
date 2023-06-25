@@ -1,53 +1,40 @@
-// const fs = require("node:fs");
+const contacts = require("./contacts");
 
-// fs.readFile("./text.txt", "utf-8", (err, data) => {
-//   if (err) throw err;
-//   console.log(data);
-// });
+const { Command } = require("commander");
+const program = new Command();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
 
-// fs.writeFile("./text.txt", `new text ${Date.now()}`, (err, data) => {
-//   if (err) throw err;
-//   console.log(data);
-// });
+program.parse(process.argv);
 
-// fs.appendFile("./text.txt", `new text ${Date.now()}\n`, (err, data) => {
-//   if (err) throw err;
-//   console.log(data);
-// });
+const argv = program.opts();
 
-// try {
-//   const data = fs.readFileSync("./text1.txt", "utf-8");
-//   console.log(data);
-// } catch (err) {
-//   console.log(err);
-// }
-// console.log("After");
+// TODO: рефакторити
+function invokeAction({ action, id, name, email, phone }) {
+  switch (action) {
+    case "list":
+      // ...
+      break;
 
-// fs.promises
-//   .readFile("./text.txt", "utf-8")
-//   .then((data) => console.log(data))
-//   .catch((error) => console.error(error));
+    case "get":
+      // ... id
+      break;
 
-// console.log("After");
+    case "add":
+      // ... name email phone
+      break;
 
-//--------через проміс
+    case "remove":
+      // ... id
+      break;
 
-// const fs = require("node:fs").promises;
-const fs = require("node:fs/promises");
-
-// fs.readFile("./text.txt", "utf-8")
-//   .then((data) => console.log(data))
-//   .catch((error) => console.error(error));
-
-// console.log("After");
-
-async function readFile(filePath) {
-  const data = await fs.readFile(filePath, "utf-8");
-  return data;
+    default:
+      console.warn("\x1B[31m Unknown action type!");
+  }
 }
 
-async function main() {
-  const data = await readFile("./text.txt");
-  console.log(data);
-}
-main();
+invokeAction(argv);
